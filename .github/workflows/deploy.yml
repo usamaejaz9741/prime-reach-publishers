@@ -1,0 +1,23 @@
+name: Deploy to Google Cloud VM
+
+on:
+  push:
+    branches:
+      - master  # Trigger deployment on push to the master branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # This sets the GitHub Actions runner to use an Ubuntu environment
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2  # This step checks out the latest code from your GitHub repository
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3  # This action sets up SSH with the private key you added to GitHub Secrets
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # This accesses the SSH private key stored in GitHub Secrets
+
+      - name: Deploy to Google Cloud VM
+        run: |
+          ssh -o StrictHostKeyChecking=no usama@prime-reach-publishers "cd /var/www/html/prime-reach-publishers && git pull origin master && sudo systemctl restart nginx"
