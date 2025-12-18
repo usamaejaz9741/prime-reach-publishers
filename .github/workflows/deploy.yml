@@ -26,26 +26,36 @@ jobs:
       - name: Runner public IP (debug)
         run: curl -s https://api.ipify.org && echo
 
-      - name: Test port 2222 reachability
-        run: |
-          timeout 8 bash -lc 'cat < /dev/null > /dev/tcp/34.73.147.98/2222' \
-            && echo "✅ Port 2222 reachable" \
-            || (echo "❌ Port 2222 NOT reachable" && exit 1)
-
-      - name: Add VM to known_hosts (port 2222)
+      - name: Add VM host key to known_hosts (port 2222)
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -p 2222 -H 34.73.147.98 >> ~/.ssh/known_hosts
 
       - name: Deploy to Google Cloud VM (port 2222)
         run: |
-          ssh -p 2222 -o BatchMode=yes -o ConnectTimeout=15 -o ServerAliveInterval=10 -o ServerAliveCountMax=3 -o PreferredAuthentications=publickey usama@34.73.147.98 << 'EOF'
+          ssh -p 2222 \
+            -o BatchMode=yes \
+            -o IdentitiesOnly=yes \
+            -o PreferredAuthentications=publickey \
+            -o ConnectTimeout=15 \
+            -o ServerAliveInterval=10 \
+            -o ServerAliveCountMax=3 \
+            usama@34.73.147.98 << 'EOF'
           set -euo pipefail
           cd /var/www/html/prime-reach-publishers
+
+          # Immutable, pull-only deploy (no git pull)
           git fetch --prune --depth=1 origin master
           git reset --hard FETCH_HEAD
           git clean -fd
+
+          # Reload nginx
           sudo systemctl reload nginx
-          curl -fsS --max-time 10 --resolve primereachpublishers.com:443:127.0.0.1 https://primereachpublishers.com/ >/dev/null
+
+          # Health check (valid TLS name, no DNS dependency)
+          curl -fsS --max-time 10 \
+            --resolve primereachpublishers.com:443:127.0.0.1 \
+            https://primereachpublishers.com/ >/dev/null
+
           echo "✅ Deployed: $(git rev-parse --short HEAD)"
           EOF
