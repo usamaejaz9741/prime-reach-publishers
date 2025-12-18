@@ -1,0 +1,27 @@
+/* CSS Variables generated from Kigen.design */
+:root {
+    --guardsman-red-50: #ffecec;
+    --guardsman-red-100: #ffd3d3;
+    --guardsman-red-200: #ffaaaa;
+    --guardsman-red-300: #ff8181;
+    --guardsman-red-400: #ff5050;
+    --guardsman-red-500: #f50000;
+    --guardsman-red-600: #ce0000;
+    --guardsman-red-700: #aa0000;
+    --guardsman-red-800: #7a0000;
+    --guardsman-red-900: #470000;
+    --guardsman-red-950: #2d0000;
+    --oxford-blue-50: #eaf2f9;
+    --oxford-blue-100: #c9def0;
+    --oxford-blue-200: #92c2e3;
+    --oxford-blue-300: #72a6c8;
+    --oxford-blue-400: #5f8ca9;
+    --oxford-blue-500: #4e748c;
+    --oxford-blue-600: #3e5d71;
+    --oxford-blue-700: #2f4858;
+    --oxford-blue-800: #223643;
+    --oxford-blue-900: #121f27;
+    --oxford-blue-950: #091218;
+    --accent-gradient: linear-gradient(90deg, #FEC001 0%, #FA990A 100%);
+  }
+  
