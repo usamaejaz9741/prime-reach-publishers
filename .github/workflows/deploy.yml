@@ -8,21 +8,29 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Set up SSH agent
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Runner public IP
+        run: curl -s https://api.ipify.org && echo
+
       - name: Add VM to known_hosts
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -H 34.73.147.98 >> ~/.ssh/known_hosts
 
+      - name: Test port 22 reachability
+        run: |
+          timeout 8 bash -lc 'cat < /dev/null > /dev/tcp/34.73.147.98/22' \
+            && echo "✅ Port 22 reachable" \
+            || (echo "❌ Port 22 NOT reachable" && exit 1)
+
       - name: Deploy to Google Cloud VM
         run: |
-          ssh usama@34.73.147.98 <<'EOF'
+          ssh -vvv -o ConnectTimeout=15 -o ServerAliveInterval=10 -o ServerAliveCountMax=3 usama@34.73.147.98 <<'EOF'
           set -euo pipefail
           cd /var/www/html/prime-reach-publishers
           git fetch --prune --depth=1 origin master
