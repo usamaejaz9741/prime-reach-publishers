@@ -20,4 +20,11 @@ jobs:
 
       - name: Deploy to Google Cloud VM
         run: |
-          ssh -o StrictHostKeyChecking=no usama@34.73.147.98 "cd /var/www/html/prime-reach-publishers && git pull origin master && sudo systemctl restart nginx"
+          ssh -o StrictHostKeyChecking=no usama@34.73.147.98 "
+          set -e
+          cd /var/www/html/prime-reach-publishers
+          git fetch origin
+          git reset --hard origin/master
+          git clean -fd
+          sudo systemctl restart nginx
+        "
