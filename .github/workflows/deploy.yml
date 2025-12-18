@@ -14,23 +14,18 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Runner public IP
-        run: curl -s https://api.ipify.org && echo
-
-      - name: Add VM to known_hosts
+      - name: Add VM to known_hosts (port 2222)
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -H 34.73.147.98 >> ~/.ssh/known_hosts
-
-      - name: Test port 22 reachability
-        run: |
-          timeout 8 bash -lc 'cat < /dev/null > /dev/tcp/34.73.147.98/22' \
-            && echo "✅ Port 22 reachable" \
-            || (echo "❌ Port 22 NOT reachable" && exit 1)
+          ssh-keyscan -p 2222 -H 34.73.147.98 >> ~/.ssh/known_hosts
 
       - name: Deploy to Google Cloud VM
         run: |
-          ssh -vvv -o ConnectTimeout=15 -o ServerAliveInterval=10 -o ServerAliveCountMax=3 usama@34.73.147.98 <<'EOF'
+          ssh -p 2222 \
+            -o ConnectTimeout=15 \
+            -o ServerAliveInterval=10 \
+            -o ServerAliveCountMax=3 \
+            usama@34.73.147.98 <<'EOF'
           set -euo pipefail
           cd /var/www/html/prime-reach-publishers
           git fetch --prune --depth=1 origin master
