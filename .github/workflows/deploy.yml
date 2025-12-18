@@ -27,26 +27,13 @@ jobs:
 
       - name: Deploy to Google Cloud VM
         run: |
-          ssh -p 2222 \
-            -o ConnectTimeout=15 \
-            -o ServerAliveInterval=10 \
-            -o ServerAliveCountMax=3 \
-            usama@34.73.147.98 << 'EOF'
+          ssh -p 2222 -o ConnectTimeout=15 -o ServerAliveInterval=10 -o ServerAliveCountMax=3 usama@34.73.147.98 << 'EOF'
           set -euo pipefail
           cd /var/www/html/prime-reach-publishers
-
-          # Immutable, pull-only deploy (no git pull)
           git fetch --prune --depth=1 origin master
           git reset --hard FETCH_HEAD
           git clean -fd
-
-          # Reload nginx
           sudo systemctl reload nginx
-
-          # Health check (valid TLS name, no DNS dependency)
-          curl -fsS --max-time 10 \
-            --resolve primereachpublishers.com:443:127.0.0.1 \
-            https://primereachpublishers.com/ >/dev/null
-
+          curl -fsS --max-time 10 --resolve primereachpublishers.com:443:127.0.0.1 https://primereachpublishers.com/ >/dev/null
           echo "✅ Deployed: $(git rev-parse --short HEAD)"
           EOF
