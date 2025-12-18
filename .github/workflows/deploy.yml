@@ -1,54 +1,34 @@
 name: Deploy to Google Cloud VM
 
 on:
-push:
-branches: [master]
-
-concurrency:
-group: deploy-production
-cancel-in-progress: true
+  push:
+    branches:
+      - master
 
 jobs:
-deploy:
-runs-on: ubuntu-latest
-timeout-minutes: 10
+  deploy:
+    runs-on: ubuntu-latest
 
-```
-steps:
-  # Not strictly required for SSH deploys, but harmless to keep
-  - name: Checkout repository
-    uses: actions/checkout@v4
+    steps:
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-  - name: Set up SSH agent
-    uses: webfactory/ssh-agent@v0.9.0
-    with:
-      ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Add VM to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H 34.73.147.98 >> ~/.ssh/known_hosts
 
-  - name: Add VM to known_hosts
-    run: |
-      mkdir -p ~/.ssh
-      ssh-keyscan -H 34.73.147.98 >> ~/.ssh/known_hosts
-
-  - name: Deploy to Google Cloud VM
-    run: |
-      ssh usama@34.73.147.98 << 'EOF'
-        set -euo pipefail
-
-        cd /var/www/html/prime-reach-publishers
-
-        # Immutable, pull-only deploy (no git pull)
-        git fetch --prune --depth=1 origin master
-        git reset --hard FETCH_HEAD
-        git clean -fd
-
-        # Reload (less downtime than restart)
-        sudo systemctl reload nginx
-
-        # Health check (validates cert name via SNI; no DNS dependency)
-        curl -fsS --max-time 10 \
-          --resolve primereachpublishers.com:443:127.0.0.1 \
-          https://primereachpublishers.com/ >/dev/null
-
-        echo "✅ Deployed: $(git rev-parse --short HEAD)"
-      EOF
-```
+      - name: Deploy to Google Cloud VM
+        run: |
+          ssh usama@34.73.147.98 <<'EOF'
+          set -euo pipefail
+          cd /var/www/html/prime-reach-publishers
+          git fetch --prune --depth=1 origin master
+          git reset --hard FETCH_HEAD
+          git clean -fd
+          sudo systemctl reload nginx
+          curl -fsS --max-time 10 --resolve primereachpublishers.com:443:127.0.0.1 https://primereachpublishers.com/ >/dev/null
+          echo "✅ Deployed: $(git rev-parse --short HEAD)"
+          EOF
