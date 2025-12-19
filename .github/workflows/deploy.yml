@@ -2,8 +2,7 @@ name: Deploy to Google Cloud VM
 
 on:
   push:
-    branches:
-      - master
+    branches: [master]
 
 concurrency:
   group: deploy-production
@@ -24,24 +23,34 @@ jobs:
         run: ssh-add -l
 
       - name: Runner public IP (debug)
-        run: curl -s https://api.ipify.org && echo
+        run: curl -fsS https://api.ipify.org && echo
+
+      - name: Preflight: port 2222 reachable
+        run: |
+          timeout 10 bash -lc '</dev/tcp/34.73.147.98/2222' && echo "2222 open" || (echo "2222 blocked" && exit 1)
 
       - name: Add VM host key to known_hosts (port 2222)
         run: |
+          set -euo pipefail
           mkdir -p ~/.ssh
-          ssh-keyscan -p 2222 -H 34.73.147.98 >> ~/.ssh/known_hosts
+          chmod 700 ~/.ssh
+          ssh-keyscan -T 5 -p 2222 -t ed25519,ecdsa,rsa 34.73.147.98 > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
 
       - name: Deploy to Google Cloud VM (port 2222)
         run: |
-          ssh -p 2222 \
+          set -euo pipefail
+          ssh -p 2222 usama@34.73.147.98 \
             -o BatchMode=yes \
             -o IdentitiesOnly=yes \
             -o PreferredAuthentications=publickey \
+            -o StrictHostKeyChecking=yes \
             -o ConnectTimeout=15 \
             -o ServerAliveInterval=10 \
             -o ServerAliveCountMax=3 \
-            usama@34.73.147.98 << 'EOF'
+            <<'EOF'
           set -euo pipefail
+
           cd /var/www/html/prime-reach-publishers
 
           # Immutable, pull-only deploy (no git pull)
@@ -49,8 +58,8 @@ jobs:
           git reset --hard FETCH_HEAD
           git clean -fd
 
-          # Reload nginx
-          sudo systemctl reload nginx
+          # Reload nginx (fail fast if sudo ever prompts)
+          sudo -n systemctl reload nginx
 
           # Health check (valid TLS name, no DNS dependency)
           curl -fsS --max-time 10 \
@@ -58,4 +67,4 @@ jobs:
             https://primereachpublishers.com/ >/dev/null
 
           echo "✅ Deployed: $(git rev-parse --short HEAD)"
-          EOF
+EOF
