@@ -22,19 +22,6 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # Debug (remove after stable)
-      - name: Show loaded SSH key (debug)
-        run: |
-          ssh-add -l
-          ssh-add -L | head -n 2 || true
-
-      - name: Runner public IP (debug)
-        run: curl -fsS https://api.ipify.org && echo
-
-      - name: "Preflight: port 2222 reachable"
-        run: |
-          timeout 10 bash -lc '</dev/tcp/34.73.147.98/2222' && echo "2222 open" || (echo "2222 blocked" && exit 1)
-
       - name: "Add VM host key to known_hosts (port 2222)"
         run: |
           set -euo pipefail
@@ -42,15 +29,6 @@ jobs:
           chmod 700 ~/.ssh
           ssh-keyscan -T 5 -p 2222 -t ed25519,ecdsa,rsa 34.73.147.98 >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
-
-      - name: "SSH auth debug (vvv)"
-        run: |
-          ssh -vvv -p 2222 \
-            -o BatchMode=yes \
-            -o PreferredAuthentications=publickey \
-            -o StrictHostKeyChecking=yes \
-            -o UserKnownHostsFile=~/.ssh/known_hosts \
-            usama@34.73.147.98 "echo ok"
 
       - name: "Deploy to Google Cloud VM (port 2222)"
         run: |
@@ -67,7 +45,6 @@ jobs:
           set -euo pipefail
 
           cd /var/www/html/prime-reach-publishers
-
           git fetch --prune --depth=1 origin master
           git reset --hard FETCH_HEAD
           git clean -fd
