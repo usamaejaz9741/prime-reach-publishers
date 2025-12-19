@@ -45,7 +45,6 @@ jobs:
           set -euo pipefail
           ssh -p 2222 \
             -o BatchMode=yes \
-            -o IdentitiesOnly=yes \
             -o PreferredAuthentications=publickey \
             -o StrictHostKeyChecking=yes \
             -o UserKnownHostsFile=~/.ssh/known_hosts \
