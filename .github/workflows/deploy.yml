@@ -41,6 +41,16 @@ jobs:
           ssh-keyscan -T 5 -p 2222 -t ed25519,ecdsa,rsa 34.73.147.98 >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
+      - name: "SSH auth debug (vvv)"
+        run: |
+          ssh -vvv -p 2222 \
+            -o BatchMode=yes \
+            -o IdentitiesOnly=yes \
+            -o PreferredAuthentications=publickey \
+            -o StrictHostKeyChecking=yes \
+            -o UserKnownHostsFile=~/.ssh/known_hosts \
+            usama@34.73.147.98 "echo ok"
+
       - name: "Deploy to Google Cloud VM (port 2222)"
         run: |
           set -euo pipefail
@@ -55,13 +65,21 @@ jobs:
             -o ServerAliveCountMax=3 \
             usama@34.73.147.98 <<'EOF'
           set -euo pipefail
+
           cd /var/www/html/prime-reach-publishers
+
+          # Immutable, pull-only deploy (no git pull)
           git fetch --prune --depth=1 origin master
           git reset --hard FETCH_HEAD
           git clean -fd
+
+          # Reload nginx (non-interactive; never prompt)
           sudo -n /usr/bin/systemctl reload nginx
+
+          # Health check (valid TLS name, no DNS dependency)
           curl -fsS --max-time 10 \
             --resolve primereachpublishers.com:443:127.0.0.1 \
             https://primereachpublishers.com/ >/dev/null
+
           echo "✅ Deployed: $(git rev-parse --short HEAD)"
           EOF
