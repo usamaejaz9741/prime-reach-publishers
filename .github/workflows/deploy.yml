@@ -62,7 +62,7 @@ jobs:
           git clean -fd
 
           # Reload nginx (fail fast if sudo ever prompts)
-          sudo -n systemctl reload nginx
+          sudo -n /usr/bin/systemctl reload nginx
 
           # Health check (valid TLS name, no DNS dependency)
           curl -fsS --max-time 10 \
