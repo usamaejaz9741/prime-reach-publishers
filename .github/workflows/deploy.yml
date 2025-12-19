@@ -34,21 +34,22 @@ jobs:
           set -euo pipefail
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          ssh-keyscan -T 5 -p 2222 -t ed25519,ecdsa,rsa 34.73.147.98 > ~/.ssh/known_hosts
+          ssh-keyscan -T 5 -p 2222 -t ed25519,ecdsa,rsa 34.73.147.98 >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
       - name: Deploy to Google Cloud VM (port 2222)
         run: |
           set -euo pipefail
-          ssh -p 2222 usama@34.73.147.98 \
+          ssh -p 2222 \
             -o BatchMode=yes \
             -o IdentitiesOnly=yes \
             -o PreferredAuthentications=publickey \
             -o StrictHostKeyChecking=yes \
+            -o UserKnownHostsFile=~/.ssh/known_hosts \
             -o ConnectTimeout=15 \
             -o ServerAliveInterval=10 \
             -o ServerAliveCountMax=3 \
-            <<'EOF'
+            usama@34.73.147.98 <<'EOF'
           set -euo pipefail
 
           cd /var/www/html/prime-reach-publishers
@@ -67,4 +68,4 @@ jobs:
             https://primereachpublishers.com/ >/dev/null
 
           echo "✅ Deployed: $(git rev-parse --short HEAD)"
-EOF
+          EOF
