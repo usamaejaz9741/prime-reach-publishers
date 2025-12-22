@@ -1,27 +1,104 @@
 /* CSS Variables generated from Kigen.design */
 :root {
-    --guardsman-red-50: #ffecec;
-    --guardsman-red-100: #ffd3d3;
-    --guardsman-red-200: #ffaaaa;
-    --guardsman-red-300: #ff8181;
-    --guardsman-red-400: #ff5050;
-    --guardsman-red-500: #f50000;
-    --guardsman-red-600: #ce0000;
-    --guardsman-red-700: #aa0000;
-    --guardsman-red-800: #7a0000;
-    --guardsman-red-900: #470000;
-    --guardsman-red-950: #2d0000;
-    --oxford-blue-50: #eaf2f9;
-    --oxford-blue-100: #c9def0;
-    --oxford-blue-200: #92c2e3;
-    --oxford-blue-300: #72a6c8;
-    --oxford-blue-400: #5f8ca9;
-    --oxford-blue-500: #4e748c;
-    --oxford-blue-600: #3e5d71;
-    --oxford-blue-700: #2f4858;
-    --oxford-blue-800: #223643;
-    --oxford-blue-900: #121f27;
-    --oxford-blue-950: #091218;
-    --accent-gradient: linear-gradient(90deg, #FEC001 0%, #FA990A 100%);
-  }
-  
+  --guardsman-red-50: #ffecec;
+  --guardsman-red-100: #ffd3d3;
+  --guardsman-red-200: #ffaaaa;
+  --guardsman-red-300: #ff8181;
+  --guardsman-red-400: #ff5050;
+  --guardsman-red-500: #f50000;
+  --guardsman-red-600: #ce0000;
+  --guardsman-red-700: #aa0000;
+  --guardsman-red-800: #7a0000;
+  --guardsman-red-900: #470000;
+  --guardsman-red-950: #2d0000;
+  --oxford-blue-50: #eaf2f9;
+  --oxford-blue-100: #c9def0;
+  --oxford-blue-200: #92c2e3;
+  --oxford-blue-300: #72a6c8;
+  --oxford-blue-400: #5f8ca9;
+  --oxford-blue-500: #4e748c;
+  --oxford-blue-600: #3e5d71;
+  --oxford-blue-700: #2f4858;
+  --oxford-blue-800: #223643;
+  --oxford-blue-900: #121f27;
+  --oxford-blue-950: #091218;
+  --accent-gradient: linear-gradient(90deg, #fec001 0%, #fa990a 100%);
+  --picton-blue-50: #e4f3ff;
+  --picton-blue-100: #c2e5ff;
+  --picton-blue-200: #83d0ff;
+  --picton-blue-300: #00befd;
+  --picton-blue-400: #00a8e1;
+  --picton-blue-500: #0094c7;
+  --picton-blue-600: #007aa4;
+  --picton-blue-700: #005d7e;
+  --picton-blue-800: #003f57;
+  --picton-blue-900: #002231;
+  --picton-blue-950: #00131d;
+  --black-50: #f1f1f1;
+  --black-100: #dbdbdb;
+  --black-200: #bababa;
+  --black-300: #9d9d9d;
+  --black-400: #838383;
+  --black-500: #6b6b6b;
+  --black-600: #545454;
+  --black-700: #3f3f3f;
+  --black-800: #2c2c2c;
+  --black-900: #1a1a1a;
+  --black-950: #000000;
+  --font-base: "Montserrat", sans-serif;
+}
+
+.logo {
+  display: inline-block;
+  height: 100px;
+  padding: 15px 0;
+  overflow: hidden;
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+header ul li a {
+  font-size: 16px;
+}
+
+/* Optional: prevent scrolling while loading */
+body.is-loading {
+  overflow: hidden;
+}
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  z-index: 9999;
+
+  /* fade */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 350ms ease, visibility 0s linear 350ms;
+}
+
+.preloader.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 350ms ease;
+}
+
+.preloader img {
+  height: 100px;
+}
+
+/* Optional: hide content until preloader goes away */
+#content {
+  opacity: 0;
+  transition: opacity 250ms ease;
+}
+#content.is-visible {
+  opacity: 1;
+}

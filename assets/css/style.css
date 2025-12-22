@@ -339,7 +339,7 @@ a {
   -webkit-text-decoration-skip: objects;
 }
 a:hover {
-  color: #ce0000;
+  color: var(--picton-blue-400);
   text-decoration: none;
 }
 a:not([href]):not([tabindex]) {
@@ -11597,7 +11597,7 @@ a.text-dark:hover {
 }
 .owl-theme .owl-dots .owl-dot.active span,
 .owl-theme .owl-dots .owl-dot:hover span {
-  background: #ce0000;
+  background: var(--picton-blue-400);
 }
 
 /**
@@ -25112,7 +25112,7 @@ body:not(.is-using-mouse) .fancybox__container :focus {
 .home .text-typed {
   color: #fff;
   text-transform: uppercase;
-  background: #ce0000;
+  background: var(--picton-blue-400);
   padding: 2px 10px;
   margin: 10px 0;
 }
