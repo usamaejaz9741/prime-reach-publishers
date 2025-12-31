@@ -8,32 +8,54 @@ concurrency:
   group: deploy-production
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
+    env:
+      SSH_HOST: 34.73.147.98
+      SSH_PORT: "2222"
+      SSH_USER: usama
+      REPO_PATH: /var/www/html/prime-reach-publishers
+      BRANCH: master
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       - name: Set up SSH agent
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: "Add VM host key to known_hosts (port 2222)"
+      - name: Add VM host key to known_hosts (port 2222)
         run: |
           set -euo pipefail
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          ssh-keyscan -T 5 -p 2222 -t ed25519,ecdsa,rsa 34.73.147.98 >> ~/.ssh/known_hosts
+          ssh-keyscan -T 5 -p "${SSH_PORT}" -t ed25519,ecdsa,rsa "${SSH_HOST}" >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
-      - name: "Deploy to Google Cloud VM (port 2222)"
+      - name: Debug - show loaded agent keys (fingerprints only)
         run: |
           set -euo pipefail
-          ssh -T -p 2222 \
+          echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK"
+          ssh -V
+          echo "== ssh-add -l =="
+          ssh-add -l
+          echo "== fingerprints from ssh-add -L =="
+          ssh-add -L | ssh-keygen -lf -
+
+      - name: Debug - SSH auth verbose (prints SSH_OK if auth works)
+        run: |
+          set -euo pipefail
+          ssh -vvv -T -p "${SSH_PORT}" \
             -o BatchMode=yes \
             -o PreferredAuthentications=publickey \
             -o StrictHostKeyChecking=yes \
@@ -41,10 +63,28 @@ jobs:
             -o ConnectTimeout=15 \
             -o ServerAliveInterval=10 \
             -o ServerAliveCountMax=3 \
-            usama@34.73.147.98 "bash -se" <<'EOF'
+            -o IdentityAgent="$SSH_AUTH_SOCK" \
+            -o IdentitiesOnly=no \
+            "${SSH_USER}@${SSH_HOST}" "echo SSH_OK"
+
+      - name: Deploy to Google Cloud VM (port 2222)
+        run: |
+          set -euo pipefail
+          ssh -T -p "${SSH_PORT}" \
+            -o BatchMode=yes \
+            -o PreferredAuthentications=publickey \
+            -o StrictHostKeyChecking=yes \
+            -o UserKnownHostsFile=~/.ssh/known_hosts \
+            -o ConnectTimeout=15 \
+            -o ServerAliveInterval=10 \
+            -o ServerAliveCountMax=3 \
+            -o IdentityAgent="$SSH_AUTH_SOCK" \
+            -o IdentitiesOnly=no \
+            "${SSH_USER}@${SSH_HOST}" "bash -se" <<'EOF'
           set -euo pipefail
 
           cd /var/www/html/prime-reach-publishers
+
           git fetch --prune --depth=1 origin master
           git reset --hard FETCH_HEAD
           git clean -fd
