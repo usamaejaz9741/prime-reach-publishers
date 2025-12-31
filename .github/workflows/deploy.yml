@@ -41,7 +41,7 @@ jobs:
             -o ConnectTimeout=15 \
             -o ServerAliveInterval=10 \
             -o ServerAliveCountMax=3 \
-            usama@34.73.147.98 <<'EOF'
+            usama@34.73.147.98 "bash -se" <<'EOF'
           set -euo pipefail
 
           cd /var/www/html/prime-reach-publishers

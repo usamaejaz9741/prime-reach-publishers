@@ -1,104 +1,71 @@
 /* CSS Variables generated from Kigen.design */
 :root {
-  --guardsman-red-50: #ffecec;
-  --guardsman-red-100: #ffd3d3;
-  --guardsman-red-200: #ffaaaa;
-  --guardsman-red-300: #ff8181;
-  --guardsman-red-400: #ff5050;
-  --guardsman-red-500: #f50000;
-  --guardsman-red-600: #ce0000;
-  --guardsman-red-700: #aa0000;
-  --guardsman-red-800: #7a0000;
-  --guardsman-red-900: #470000;
-  --guardsman-red-950: #2d0000;
-  --oxford-blue-50: #eaf2f9;
-  --oxford-blue-100: #c9def0;
-  --oxford-blue-200: #92c2e3;
-  --oxford-blue-300: #72a6c8;
-  --oxford-blue-400: #5f8ca9;
-  --oxford-blue-500: #4e748c;
-  --oxford-blue-600: #3e5d71;
-  --oxford-blue-700: #2f4858;
-  --oxford-blue-800: #223643;
-  --oxford-blue-900: #121f27;
-  --oxford-blue-950: #091218;
+  /* Azure Radiance */
+  --azure-radiance-50: #edf0ff;
+  --azure-radiance-100: #d4ddff;
+  --azure-radiance-200: #adc0ff;
+  --azure-radiance-300: #87a6ff;
+  --azure-radiance-400: #5c8fff;
+  --azure-radiance-500: #0578ff;
+  --azure-radiance-600: #0066dc;
+  --azure-radiance-700: #004fae;
+  --azure-radiance-800: #00367b;
+  --azure-radiance-900: #001d48;
+  --azure-radiance-950: #00102e;
+  /* Bright Gray */
+  --bright-gray-50: #f0f0f3;
+  --bright-gray-100: #dbdbe1;
+  --bright-gray-200: #bbbcc6;
+  --bright-gray-300: #9ea0af;
+  --bright-gray-400: #858799;
+  --bright-gray-500: #6d7084;
+  --bright-gray-600: #585a6d;
+  --bright-gray-700: #444655;
+  --bright-gray-800: #333440;
+  --bright-gray-900: #1c1d25;
+  --bright-gray-950: #101116;
+  /* Accent Gradient */
   --accent-gradient: linear-gradient(90deg, #fec001 0%, #fa990a 100%);
-  --picton-blue-50: #e4f3ff;
-  --picton-blue-100: #c2e5ff;
-  --picton-blue-200: #83d0ff;
-  --picton-blue-300: #00befd;
-  --picton-blue-400: #00a8e1;
-  --picton-blue-500: #0094c7;
-  --picton-blue-600: #007aa4;
-  --picton-blue-700: #005d7e;
-  --picton-blue-800: #003f57;
-  --picton-blue-900: #002231;
-  --picton-blue-950: #00131d;
-  --black-50: #f1f1f1;
-  --black-100: #dbdbdb;
-  --black-200: #bababa;
-  --black-300: #9d9d9d;
-  --black-400: #838383;
-  --black-500: #6b6b6b;
-  --black-600: #545454;
-  --black-700: #3f3f3f;
-  --black-800: #2c2c2c;
-  --black-900: #1a1a1a;
-  --black-950: #000000;
-  --font-base: "Montserrat", sans-serif;
 }
 
-.logo {
-  display: inline-block;
-  height: 100px;
-  padding: 15px 0;
-  overflow: hidden;
+body {
+  --heading-font: "Inter", sans-serif;
+  --secondary-color: var(--accent-gradient);
+  --heading-color: var(--bright-gray-950);
 }
 
-.logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.home-two {
+  --primary-color: var(--azure-radiance-500);
 }
 
-header ul li a {
-  font-size: 16px;
+.menu-btns .theme-btn {
+  margin-left: 0px;
 }
 
-/* Optional: prevent scrolling while loading */
-body.is-loading {
-  overflow: hidden;
+.ms-lg-20 {
+  margin-inline-start: 20px !important;
 }
 
-.preloader {
-  position: fixed;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  background: #fff;
-  z-index: 9999;
-
-  /* fade */
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 350ms ease, visibility 0s linear 350ms;
+.main-header:not(.fixed-header) .header-upper {
+  background: var(--bright-gray-950);
 }
 
-.preloader.is-visible {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 350ms ease;
+.main-header:not(.fixed-header) .main-menu .navbar-collapse li a {
+  color: white;
 }
 
-.preloader img {
-  height: 100px;
+.main-header.fixed-header .main-menu .navbar-collapse > ul {
+  background: white;
+  -webkit-box-shadow: inset 0px 0px 0px 0px rgba(87, 95, 245, 0.1);
+  box-shadow: inset 0px 0px 0px 0px rgba(87, 95, 245, 0.1);
 }
 
-/* Optional: hide content until preloader goes away */
-#content {
-  opacity: 0;
-  transition: opacity 250ms ease;
+.main-header:not(.fixed-header) .main-menu .navbar-collapse > ul {
+  background: var(--bright-gray-950);
+  -webkit-box-shadow: inset 0px 0px 0px 0px rgba(87, 95, 245, 0.1);
+  box-shadow: inset 0px 0px 0px 0px rgba(87, 95, 245, 0.1);
 }
-#content.is-visible {
-  opacity: 1;
+
+.main-menu .navbar-header .navbar-toggle .icon-bar {
+  background: var(--azure-radiance-500);
 }
