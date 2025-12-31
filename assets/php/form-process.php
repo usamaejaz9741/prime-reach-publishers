@@ -29,7 +29,7 @@ if (empty($_POST["message"])) {
 }
 
 
-$EmailTo = "yourname@domain.com";
+$EmailTo = "usama@alviglobal.com";
 
 $bodySubject = "New Message Received";
 

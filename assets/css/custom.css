@@ -1,6 +1,8 @@
-/* CSS Variables generated from Kigen.design */
+/* =========================================================
+   Design Tokens (generated from Kigen.design)
+   ========================================================= */
 :root {
-  /* Azure Radiance */
+  /* --- Azure Radiance (blue) --- */
   --azure-radiance-50: #edf0ff;
   --azure-radiance-100: #d4ddff;
   --azure-radiance-200: #adc0ff;
@@ -12,7 +14,8 @@
   --azure-radiance-800: #00367b;
   --azure-radiance-900: #001d48;
   --azure-radiance-950: #00102e;
-  /* Bright Gray */
+
+  /* --- Bright Gray (neutral) --- */
   --bright-gray-50: #f0f0f3;
   --bright-gray-100: #dbdbe1;
   --bright-gray-200: #bbbcc6;
@@ -24,48 +27,82 @@
   --bright-gray-800: #333440;
   --bright-gray-900: #1c1d25;
   --bright-gray-950: #101116;
-  /* Accent Gradient */
+
+  /* --- Accent --- */
   --accent-gradient: linear-gradient(90deg, #fec001 0%, #fa990a 100%);
 }
 
+/* =========================================================
+     Base / Global Theme Vars
+     ========================================================= */
 body {
+  /* Typography */
   --heading-font: "Inter", sans-serif;
+
+  /* Brand usage */
   --secondary-color: var(--accent-gradient);
   --heading-color: var(--bright-gray-950);
 }
 
+/* =========================================================
+     Page / Layout Variants
+     ========================================================= */
 .home-two {
   --primary-color: var(--azure-radiance-500);
 }
 
-.menu-btns .theme-btn {
-  margin-left: 0px;
+/* =========================================================
+     Header / Navigation
+     ========================================================= */
+
+/* Shared navbar panel styling (both fixed and non-fixed) */
+.main-header .main-menu .navbar-collapse > ul {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-transition: all 500ms ease;
+  -o-transition: all 500ms ease;
+  transition: all 500ms ease;
 }
 
-.ms-lg-20 {
-  margin-inline-start: 20px !important;
-}
-
+/* Non-fixed header background */
 .main-header:not(.fixed-header) .header-upper {
   background: var(--bright-gray-950);
 }
 
+/* Non-fixed menu: links + dropdown background */
 .main-header:not(.fixed-header) .main-menu .navbar-collapse li a {
-  color: white;
+  color: #fff;
 }
 
+.main-header:not(.fixed-header) .main-menu .navbar-collapse li ul {
+  background: var(--bright-gray-950);
+}
+
+.main-header:not(.fixed-header) .main-menu .navbar-collapse li.dropdown .dropdown-btn {
+  color: #fff;
+}
+
+/* Navbar panel background by header state */
 .main-header.fixed-header .main-menu .navbar-collapse > ul {
-  background: white;
-  -webkit-box-shadow: inset 0px 0px 0px 0px rgba(87, 95, 245, 0.1);
-  box-shadow: inset 0px 0px 0px 0px rgba(87, 95, 245, 0.1);
+  background: #fff;
 }
 
 .main-header:not(.fixed-header) .main-menu .navbar-collapse > ul {
   background: var(--bright-gray-950);
-  -webkit-box-shadow: inset 0px 0px 0px 0px rgba(87, 95, 245, 0.1);
-  box-shadow: inset 0px 0px 0px 0px rgba(87, 95, 245, 0.1);
 }
 
+/* Mobile toggle bars */
 .main-menu .navbar-header .navbar-toggle .icon-bar {
   background: var(--azure-radiance-500);
+}
+
+/* =========================================================
+     Buttons / Utilities
+     ========================================================= */
+.menu-btns .theme-btn {
+  margin-left: 0;
+}
+
+.ms-lg-20 {
+  margin-inline-start: 20px !important;
 }
