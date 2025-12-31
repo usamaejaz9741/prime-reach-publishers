@@ -88,6 +88,9 @@ jobs:
           git fetch --prune --depth=1 origin master
           git reset --hard FETCH_HEAD
           git clean -fd
+          echo "$(git rev-parse HEAD)  $(date -u +%F_%T)Z" | sudo tee /var/www/html/prime-reach-publishers/.deployed >/dev/null
+          sudo cp /var/www/html/prime-reach-publishers/.deployed /var/www/html/prime-reach-publishers/version.txt
+
 
           sudo -n /usr/bin/systemctl reload nginx
 
