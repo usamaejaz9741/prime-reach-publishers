@@ -464,10 +464,10 @@
         // ## Coming Soon CountDown //
 		if($('.coming-soon-wrap').length !== 0){
                 const second = 1000,
-				  minute = second * 60,
-				  hour = minute * 60,
-				  day = hour * 24;
-				let	countDown = new Date('Mar 15, 2024 00:00:00').getTime(),
+			  minute = second * 60,
+			  hour = minute * 60,
+			  day = hour * 24;
+			let	countDown = new Date('Jul 3, 2026 00:00:00').getTime(),
 			x = setInterval(function() {
 			  let now = new Date().getTime(),
 				  distance = countDown - now;
