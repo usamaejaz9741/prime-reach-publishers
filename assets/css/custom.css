@@ -1,6 +1,3 @@
-/* =========================================================
-   Design Tokens (generated from Kigen.design)
-   ========================================================= */
 :root {
   /* --- Azure Radiance (blue) --- */
   --azure-radiance-50: #edf0ff;
@@ -28,34 +25,32 @@
   --bright-gray-900: #1c1d25;
   --bright-gray-950: #101116;
 
-  /* --- Accent --- */
+  /* Accent Gradient */
   --accent-gradient: linear-gradient(90deg, #fec001 0%, #fa990a 100%);
 }
 
-/* =========================================================
-     Base / Global Theme Vars
-     ========================================================= */
 body {
-  /* Typography */
   --heading-font: "Inter", sans-serif;
-
-  /* Brand usage */
-  --secondary-color: var(--accent-gradient);
   --heading-color: var(--bright-gray-950);
+
+  --secondary-color: var(--accent-gradient);
 }
 
-/* =========================================================
-     Page / Layout Variants
-     ========================================================= */
 .home-two {
   --primary-color: var(--azure-radiance-500);
 }
 
-/* =========================================================
-     Header / Navigation
-     ========================================================= */
+/* Centralize header colors so fixed vs non-fixed stays consistent */
+.main-header {
+  --header-bg: #fff;
+  --header-fg: var(--bright-gray-950);
+}
 
-/* Shared navbar panel styling (both fixed and non-fixed) */
+.main-header:not(.fixed-header) {
+  --header-bg: var(--bright-gray-950);
+  --header-fg: #fff;
+}
+
 .main-header .main-menu .navbar-collapse > ul {
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -64,45 +59,42 @@ body {
   transition: all 500ms ease;
 }
 
-/* Non-fixed header background */
-.main-header:not(.fixed-header) .header-upper {
-  background: var(--bright-gray-950);
+.main-header .header-upper {
+  background: var(--header-bg);
 }
 
-/* Non-fixed menu: links + dropdown background */
-.main-header:not(.fixed-header) .main-menu .navbar-collapse li a {
-  color: #fff;
+.main-header .main-menu .navbar-collapse > ul {
+  background: var(--header-bg);
 }
 
-.main-header:not(.fixed-header) .main-menu .navbar-collapse li ul {
-  background: var(--bright-gray-950);
+.main-header .main-menu .navbar-collapse li a {
+  color: var(--header-fg);
 }
 
-.main-header:not(.fixed-header) .main-menu .navbar-collapse li.dropdown .dropdown-btn {
-  color: #fff;
+.main-header .main-menu .navbar-collapse li a:hover {
+  color: var(--primary-color);
 }
 
-/* Navbar panel background by header state */
+.main-header .main-menu .navbar-collapse li.dropdown .dropdown-btn {
+  color: var(--header-fg);
+}
+
+.main-header .main-menu .navbar-collapse li ul {
+  background: var(--header-bg);
+}
+
 .main-header.fixed-header .main-menu .navbar-collapse > ul {
   background: #fff;
 }
 
-.main-header:not(.fixed-header) .main-menu .navbar-collapse > ul {
-  background: var(--bright-gray-950);
-}
-
-/* Mobile toggle bars */
 .main-menu .navbar-header .navbar-toggle .icon-bar {
   background: var(--azure-radiance-500);
 }
 
-/* =========================================================
-     Buttons / Utilities
-     ========================================================= */
 .menu-btns .theme-btn {
   margin-left: 0;
 }
 
 .ms-lg-20 {
-  margin-inline-start: 20px !important;
+  margin-inline-start: 20px;
 }
