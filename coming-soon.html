@@ -1,125 +1,313 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
+
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Coming Soon</title>
+  <meta name="description" content="We’re polishing the final details of this page. Coming soon." />
 
-    <!-- Title -->
-    <title>Akpager - Multipurpose Landing page HTML Template || Coming Soon</title>
-    <!-- Favicon Icon -->
-    <link rel="shortcut icon" href="assets/images/logos/favicon.png" type="image/x-icon">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Flaticon -->
-    <link rel="stylesheet" href="assets/css/flaticon.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="assets/css/fontawesome-5.14.0.min.css">
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <!-- Magnific Popup -->
-    <link rel="stylesheet" href="assets/css/magnific-popup.min.css">
-    <!-- Nice Select -->
-    <link rel="stylesheet" href="assets/css/nice-select.min.css">
-    <!-- jQuery UI -->
-    <link rel="stylesheet" href="assets/css/jquery-ui.min.css">
-    <!-- Animate -->
-    <link rel="stylesheet" href="assets/css/aos.css">
-    <!-- Slick -->
-    <link rel="stylesheet" href="assets/css/slick.min.css">
-    <!-- Main Style -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    
+  <!-- Favicons -->
+  <link rel="shortcut icon" href="assets/images/logos/favicon.png" type="image/png" />
+
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      /* --- Azure Radiance (blue) --- */
+      --azure-radiance-50: #edf0ff;
+      --azure-radiance-100: #d4ddff;
+      --azure-radiance-200: #adc0ff;
+      --azure-radiance-300: #87a6ff;
+      --azure-radiance-400: #5c8fff;
+      --azure-radiance-500: #0578ff;
+      --azure-radiance-600: #0066dc;
+      --azure-radiance-700: #004fae;
+      --azure-radiance-800: #00367b;
+      --azure-radiance-900: #001d48;
+      --azure-radiance-950: #00102e;
+
+      /* --- Bright Gray (neutral) --- */
+      --bright-gray-50: #f0f0f3;
+      --bright-gray-100: #dbdbe1;
+      --bright-gray-200: #bbbcc6;
+      --bright-gray-300: #9ea0af;
+      --bright-gray-400: #858799;
+      --bright-gray-500: #6d7084;
+      --bright-gray-600: #585a6d;
+      --bright-gray-700: #444655;
+      --bright-gray-800: #333440;
+      --bright-gray-900: #1c1d25;
+      --bright-gray-950: #101116;
+
+      /* Accent Gradient */
+      --accent-gradient: linear-gradient(90deg, #fec001 0%, #fa990a 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto,
+        Helvetica, Arial, sans-serif;
+      color: var(--bright-gray-50);
+      background: radial-gradient(900px 500px at 15% 20%,
+          rgba(5, 120, 255, 0.22),
+          transparent 60%),
+        radial-gradient(900px 500px at 85% 25%,
+          rgba(92, 143, 255, 0.16),
+          transparent 55%),
+        linear-gradient(135deg,
+          var(--azure-radiance-950),
+          var(--bright-gray-950));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .wrap {
+      width: min(760px, 100%);
+      text-align: center;
+    }
+
+    .card {
+      background: rgba(16, 17, 22, 0.72);
+      /* bright-gray-950 with alpha */
+      border: 1px solid rgba(219, 219, 225, 0.12);
+      /* bright-gray-100 with alpha */
+      border-radius: 18px;
+      padding: 44px 28px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .logo img {
+      height: 56px;
+      width: auto;
+      max-width: 240px;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35));
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--bright-gray-200);
+      border: 1px solid rgba(219, 219, 225, 0.14);
+      background: rgba(51, 52, 64, 0.45);
+      /* bright-gray-800 with alpha */
+      margin-bottom: 18px;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--azure-radiance-500);
+      box-shadow: 0 0 0 7px rgba(5, 120, 255, 0.14);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(34px, 4.2vw, 48px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: var(--bright-gray-50);
+    }
+
+    p {
+      margin: 0 auto 22px;
+      max-width: 56ch;
+      color: var(--bright-gray-200);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.65;
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(219, 219, 225, 0.12);
+      margin: 22px auto;
+      width: min(520px, 100%);
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .input {
+      flex: 1;
+      max-width: 380px;
+      display: flex;
+      align-items: center;
+      border-radius: 12px;
+      border: 1px solid rgba(219, 219, 225, 0.14);
+      background: rgba(51, 52, 64, 0.35);
+      padding: 10px 12px;
+    }
+
+    .input input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--bright-gray-50);
+      font-size: 15px;
+      font-family: "Inter", sans-serif;
+      font-weight: 500;
+    }
+
+    .input input::placeholder {
+      color: rgba(187, 188, 198, 0.9);
+      font-weight: 500;
+    }
+
+    .input:focus-within {
+      border-color: rgba(5, 120, 255, 0.65);
+      box-shadow: 0 0 0 4px rgba(5, 120, 255, 0.12);
+    }
+
+    .btn {
+      flex: 0 0 auto;
+      border: 0;
+      cursor: pointer;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-weight: 800;
+      font-family: "Inter", sans-serif;
+      color: var(--bright-gray-950);
+      background: var(--accent-gradient);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
+      transition: transform 0.12s ease, filter 0.12s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn:focus-visible,
+    .links a:focus-visible {
+      outline: 2px solid rgba(5, 120, 255, 0.8);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
+
+    .fine {
+      margin-top: 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--bright-gray-300);
+    }
+
+    .links {
+      margin-top: 18px;
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .links a {
+      color: var(--bright-gray-100);
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1px dashed rgba(219, 219, 225, 0.35);
+      padding-bottom: 2px;
+    }
+
+    .links a:hover {
+      color: var(--azure-radiance-200);
+      border-bottom-color: rgba(5, 120, 255, 0.8);
+    }
+
+    footer {
+      margin-top: 16px;
+      color: rgba(158, 160, 175, 0.9);
+      font-size: 12px;
+      font-weight: 500;
+    }
+  </style>
 </head>
+
 <body>
-    <div class="page-wrapper">
+  <main class="wrap">
+    <section class="card" role="region" aria-label="Coming soon card">
+      <div class="logo">
+        <a href="index.html"><img src="assets/images/logos/prp-logo-blue.webp" alt="Prime Reach Publishers Logo"
+            title="Prime Reach Publishers Logo" /></a>
+      </div>
 
-        <!-- Preloader -->
-        <div class="preloader"><div class="custom-loader"></div></div>
+      <div class="badge">
+        <span class="dot" aria-hidden="true"></span>
+        Coming soon
+      </div>
 
-        <!-- main header -->
-        <header class="main-header menu-absolute no-border">
+      <h1>Almost ready...</h1>
+      <p>
+        We’re polishing the final details of this page. Drop your email and
+        we’ll notify you when it’s ready.
+      </p>
 
-            <!--Header-Upper-->
-            <div class="header-upper py-10">
-                <div class="container clearfix">
+      <div class="divider" aria-hidden="true"></div>
 
-                    <div class="header-inner py-20 rel d-flex align-items-center">
-                        <div class="logo-outer-two">
-                            <div class="logo"><a href="index.html"><img src="assets/images/logos/logo6.png" alt="Logo" title="Logo"></a></div>
-                        </div>
+      <form action="https://api.web3forms.com/submit" method="POST"
+        style="display: flex; gap: 10px; justify-content: center;">
+        <input type="hidden" name="access_key" value="4da3f7bc-388e-4bc7-a115-e575aebb5702" />
+        <div class="input" aria-label="Email address">
+          <input type="email" name="email" placeholder="Enter your email address" required />
+        </div>
+        <button class="btn" type="submit">Notify Me</button>
+      </form>
 
-                        <!-- Menu Button -->
-                        <div class="menu-btn ms-auto d-none d-sm-flex">
-                            <a href="contact.html" class="theme-btn">Get Started <i class="far fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--End Header Upper-->
-        </header>
-       
-       
-        <!-- Coming Soon Area Start -->
-        <section class="coming-soon-area py-100 bgs-cover" style="background-image: url(assets/images/backgrounds/coming-soon.jpg);">
-            <div class="container">
-                <div class="row pt-10 rpt-65 gap-100 align-items-center">
-                    <div class="col-lg-6">
-                       <div class="coming-soon-content rmb-55">
-                            <h1 data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">We Are Coming Very Soon</h1>
-                            <p data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">It looks like you've ventured into uncharted territory. The page you were looking for may have been moved, deleted, or never existed</p>
-                            <ul class="coming-soon-wrap mt-50" data-aos="fade-up" data-aos-delay="150" data-aos-duration="1500" data-aos-offset="50">
-                                <li><span id="days"></span>Days</li>
-                                <li><span id="hours"></span>Hours</li>
-                                <li><span id="minutes"></span>Min</li>
-                                <li><span id="seconds"></span>Sec</li>
-                            </ul>
-                       </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="coming-soon-image" data-aos="fade-left" data-aos-duration="1500" data-aos-offset="50">
-                            <img src="assets/images/Others/coming-soon.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Coming Soon Area End -->
-       
+      <div class="fine">No spam — just one email at launch.</div>
 
-    </div>
-    <!--End pagewrapper-->
-   
-    
-    <!-- Jquery -->
-    <script src="assets/js/jquery-3.6.0.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="assets/js/bootstrap.min.js"></script>
-    <!-- Appear Js -->
-    <script src="assets/js/appear.min.js"></script>
-    <!-- Slick -->
-    <script src="assets/js/slick.min.js"></script>
-    <!-- jQuery UI -->
-    <script src="assets/js/jquery-ui.min.js"></script>
-    <!-- Magnific Popup -->
-    <script src="assets/js/jquery.magnific-popup.min.js"></script>
-    <!-- Nice Select -->
-    <script src="assets/js/jquery.nice-select.min.js"></script>
-    <!-- Image Loader -->
-    <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-    <!-- Circle Progress -->
-    <script src="assets/js/circle-progress.min.js"></script>
-    <!-- Skillbar -->
-    <script src="assets/js/skill.bars.jquery.min.js"></script>
-    <!-- Isotope -->
-    <script src="assets/js/isotope.pkgd.min.js"></script>
-    <!--  AOS Animation -->
-    <script src="assets/js/aos.js"></script>
-    <!-- Custom script -->
-    <script src="assets/js/script.js"></script>
+      <nav class="links" aria-label="Links">
+        <a href="https://www.facebook.com/primereachpublishers/">Facebook</a>
+        <a href="https://x.com/primereachpublishers/">X</a>
+        <a href="https://www.instagram.com/primereachpublishers/">Instagram</a>
+        <a href="https://www.linkedin.com/company/primereachpublishers/">LinkedIn</a>
+        <a href="mailto:support@primereachpublishers.com">Contact</a>
+      </nav>
+    </section>
 
+    <footer>© <span id="y"></span> Prime Reach Publishers</footer>
+  </main>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
 </body>
+
 </html>

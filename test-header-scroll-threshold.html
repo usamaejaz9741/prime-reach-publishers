@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header Scroll Threshold Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            height: 3000px; /* Make page scrollable */
+        }
+        
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #333;
+            color: white;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        
+        .main-header.fixed-header {
+            background: #0066cc;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #0066cc;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
+        
+        .test-container {
+            margin-top: 100px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .test-result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .test-result.pass {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .test-result.fail {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .test-result.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        #test-output {
+            margin-top: 20px;
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <h1>Header Scroll Threshold Test</h1>
+    </header>
+    
+    <button class="scroll-top">↑ Top</button>
+    
+    <div class="scroll-indicator" id="scrollIndicator">
+        Scroll: 0px
+    </div>
+    
+    <div class="test-container">
+        <h2>Automated Test Suite</h2>
+        <p>This test verifies that the header scroll threshold is consistent across all scenarios.</p>
+        
+        <button onclick="runTests()" style="padding: 10px 20px; background: #0066cc; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
+            Run Tests
+        </button>
+        
+        <div id="test-output"></div>
+    </div>
+
+    <!-- Load jQuery -->
+    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    
+    <!-- Load the fixed script -->
+    <script src="assets/js/script.js"></script>
+    
+    <script>
+        // Update scroll indicator
+        $(window).on('scroll', function() {
+            $('#scrollIndicator').text('Scroll: ' + $(window).scrollTop() + 'px');
+        });
+        
+        // Test Suite
+        function runTests() {
+            const output = $('#test-output');
+            output.html('<h3>Running Tests...</h3>');
+            
+            const results = [];
+            let passCount = 0;
+            let failCount = 0;
+            
+            // Test 1: Verify threshold constant exists
+            results.push({
+                name: 'Test 1: Threshold constant is defined',
+                pass: typeof HEADER_FIXED_THRESHOLD !== 'undefined',
+                message: typeof HEADER_FIXED_THRESHOLD !== 'undefined' 
+                    ? 'HEADER_FIXED_THRESHOLD is defined' 
+                    : 'HEADER_FIXED_THRESHOLD is not defined'
+            });
+            
+            // Test 2: Header should NOT have fixed-header class below threshold
+            window.scrollTo(0, 50);
+            setTimeout(() => {
+                const hasFixedClass = $('.main-header').hasClass('fixed-header');
+                results.push({
+                    name: 'Test 2: Header NOT fixed at 50px (below threshold)',
+                    pass: !hasFixedClass,
+                    message: !hasFixedClass 
+                        ? 'Header correctly does not have fixed-header class at 50px' 
+                        : 'FAIL: Header has fixed-header class at 50px (should not)'
+                });
+                
+                // Test 3: Header should NOT have fixed-header class at 99px
+                window.scrollTo(0, 99);
+                setTimeout(() => {
+                    const hasFixedClass = $('.main-header').hasClass('fixed-header');
+                    results.push({
+                        name: 'Test 3: Header NOT fixed at 99px (just below threshold)',
+                        pass: !hasFixedClass,
+                        message: !hasFixedClass 
+                            ? 'Header correctly does not have fixed-header class at 99px' 
+                            : 'FAIL: Header has fixed-header class at 99px (should not)'
+                    });
+                    
+                    // Test 4: Header SHOULD have fixed-header class at 100px
+                    window.scrollTo(0, 100);
+                    setTimeout(() => {
+                        const hasFixedClass = $('.main-header').hasClass('fixed-header');
+                        results.push({
+                            name: 'Test 4: Header IS fixed at 100px (at threshold)',
+                            pass: hasFixedClass,
+                            message: hasFixedClass 
+                                ? 'Header correctly has fixed-header class at 100px' 
+                                : 'FAIL: Header does not have fixed-header class at 100px (should have)'
+                        });
+                        
+                        // Test 5: Header SHOULD have fixed-header class at 150px
+                        window.scrollTo(0, 150);
+                        setTimeout(() => {
+                            const hasFixedClass = $('.main-header').hasClass('fixed-header');
+                            results.push({
+                                name: 'Test 5: Header IS fixed at 150px (above threshold)',
+                                pass: hasFixedClass,
+                                message: hasFixedClass 
+                                    ? 'Header correctly has fixed-header class at 150px' 
+                                    : 'FAIL: Header does not have fixed-header class at 150px (should have)'
+                            });
+                            
+                            // Test 6: Header SHOULD have fixed-header class at 250px
+                            window.scrollTo(0, 250);
+                            setTimeout(() => {
+                                const hasFixedClass = $('.main-header').hasClass('fixed-header');
+                                results.push({
+                                    name: 'Test 6: Header IS fixed at 250px (well above threshold)',
+                                    pass: hasFixedClass,
+                                    message: hasFixedClass 
+                                        ? 'Header correctly has fixed-header class at 250px' 
+                                        : 'FAIL: Header does not have fixed-header class at 250px (should have)'
+                                });
+                                
+                                // Test 7: Scroll back down - header should lose fixed class
+                                window.scrollTo(0, 50);
+                                setTimeout(() => {
+                                    const hasFixedClass = $('.main-header').hasClass('fixed-header');
+                                    results.push({
+                                        name: 'Test 7: Header NOT fixed when scrolling back to 50px',
+                                        pass: !hasFixedClass,
+                                        message: !hasFixedClass 
+                                            ? 'Header correctly removes fixed-header class when scrolling back to 50px' 
+                                            : 'FAIL: Header still has fixed-header class at 50px after scrolling back'
+                                    });
+                                    
+                                    // Test 8: Scroll to top - header should not be fixed
+                                    window.scrollTo(0, 0);
+                                    setTimeout(() => {
+                                        const hasFixedClass = $('.main-header').hasClass('fixed-header');
+                                        results.push({
+                                            name: 'Test 8: Header NOT fixed at top (0px)',
+                                            pass: !hasFixedClass,
+                                            message: !hasFixedClass 
+                                                ? 'Header correctly does not have fixed-header class at top' 
+                                                : 'FAIL: Header has fixed-header class at top (should not)'
+                                        });
+                                        
+                                        // Display results
+                                        displayResults(results);
+                                    }, 100);
+                                }, 100);
+                            }, 100);
+                        }, 100);
+                    }, 100);
+                }, 100);
+            }, 100);
+        }
+        
+        function displayResults(results) {
+            let html = '<h3>Test Results</h3>';
+            let passCount = 0;
+            let failCount = 0;
+            
+            results.forEach(result => {
+                if (result.pass) {
+                    passCount++;
+                    html += `<div class="test-result pass">✓ ${result.name}<br><small>${result.message}</small></div>`;
+                } else {
+                    failCount++;
+                    html += `<div class="test-result fail">✗ ${result.name}<br><small>${result.message}</small></div>`;
+                }
+            });
+            
+            const totalTests = results.length;
+            const passRate = ((passCount / totalTests) * 100).toFixed(1);
+            
+            html += `<div class="test-result info" style="margin-top: 20px; font-weight: bold;">
+                Summary: ${passCount}/${totalTests} tests passed (${passRate}%)
+                ${failCount > 0 ? '<br>⚠️ Some tests failed - the bug may still exist' : '<br>✓ All tests passed - bug is fixed!'}
+            </div>`;
+            
+            $('#test-output').html(html);
+            
+            // Scroll back to top after tests
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
+
+
+
